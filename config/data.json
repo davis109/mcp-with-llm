@@ -1,0 +1,162 @@
+{
+  "step_types": [
+    {
+      "id": "manual_task",
+      "name": "Manual Task",
+      "description": "A task that requires human intervention",
+      "icon": "👤",
+      "properties": {
+        "assignee": "string",
+        "estimated_duration": "number",
+        "priority": "enum:low,medium,high,critical"
+      }
+    },
+    {
+      "id": "automated_task",
+      "name": "Automated Task",
+      "description": "A task executed by a system or script",
+      "icon": "🤖",
+      "properties": {
+        "service": "string",
+        "endpoint": "string",
+        "retry_policy": "object"
+      }
+    },
+    {
+      "id": "decision_gate",
+      "name": "Decision Gate",
+      "description": "A conditional branching point in the workflow",
+      "icon": "🔀",
+      "properties": {
+        "condition": "string",
+        "branches": "array"
+      }
+    },
+    {
+      "id": "approval",
+      "name": "Approval Step",
+      "description": "Requires approval from designated approvers",
+      "icon": "✅",
+      "properties": {
+        "approvers": "array",
+        "approval_threshold": "number",
+        "timeout_hours": "number"
+      }
+    },
+    {
+      "id": "notification",
+      "name": "Notification",
+      "description": "Send notifications via various channels",
+      "icon": "📧",
+      "properties": {
+        "channels": "array:email,slack,sms,webhook",
+        "recipients": "array",
+        "template": "string"
+      }
+    },
+    {
+      "id": "data_transformation",
+      "name": "Data Transformation",
+      "description": "Transform, enrich, or process data",
+      "icon": "🔄",
+      "properties": {
+        "input_schema": "object",
+        "output_schema": "object",
+        "transformation_rules": "array"
+      }
+    },
+    {
+      "id": "integration",
+      "name": "System Integration",
+      "description": "Connect to external systems or APIs",
+      "icon": "🔌",
+      "properties": {
+        "system": "string",
+        "operation": "enum:read,write,update,delete",
+        "authentication": "object"
+      }
+    },
+    {
+      "id": "timer",
+      "name": "Timer/Delay",
+      "description": "Wait for a specified duration or until a timestamp",
+      "icon": "⏱️",
+      "properties": {
+        "duration": "number",
+        "unit": "enum:seconds,minutes,hours,days",
+        "timestamp": "string"
+      }
+    }
+  ],
+  "roles": [
+    {
+      "id": "initiator",
+      "name": "Workflow Initiator",
+      "description": "The person or system that starts the workflow",
+      "permissions": ["start", "cancel"],
+      "color": "#4CAF50"
+    },
+    {
+      "id": "approver",
+      "name": "Approver",
+      "description": "Reviews and approves workflow steps",
+      "permissions": ["approve", "reject", "comment"],
+      "color": "#2196F3"
+    },
+    {
+      "id": "executor",
+      "name": "Task Executor",
+      "description": "Performs assigned tasks in the workflow",
+      "permissions": ["execute", "update_status", "comment"],
+      "color": "#FF9800"
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer",
+      "description": "Reviews completed work without approval authority",
+      "permissions": ["view", "comment"],
+      "color": "#9C27B0"
+    },
+    {
+      "id": "administrator",
+      "name": "Workflow Administrator",
+      "description": "Full control over workflow configuration and execution",
+      "permissions": ["full_access"],
+      "color": "#F44336"
+    },
+    {
+      "id": "system",
+      "name": "System/Automation",
+      "description": "Automated system actor",
+      "permissions": ["execute", "update_status", "trigger"],
+      "color": "#607D8B"
+    }
+  ],
+  "domain_templates": {
+    "finance": {
+      "common_steps": ["approval", "notification", "data_transformation"],
+      "typical_flow": "initiate -> validate -> approve -> execute -> notify",
+      "compliance_requirements": ["audit_trail", "dual_approval", "segregation_of_duties"]
+    },
+    "hr": {
+      "common_steps": ["manual_task", "approval", "notification"],
+      "typical_flow": "request -> manager_approval -> hr_review -> execution -> onboarding",
+      "compliance_requirements": ["data_privacy", "record_retention"]
+    },
+    "it": {
+      "common_steps": ["automated_task", "approval", "integration", "notification"],
+      "typical_flow": "request -> triage -> assign -> resolve -> verify -> close",
+      "compliance_requirements": ["security_review", "change_management"]
+    },
+    "operations": {
+      "common_steps": ["manual_task", "automated_task", "decision_gate", "timer"],
+      "typical_flow": "trigger -> validate -> process -> quality_check -> completion",
+      "compliance_requirements": ["sop_compliance", "quality_assurance"]
+    },
+    "customer_service": {
+      "common_steps": ["manual_task", "decision_gate", "notification", "integration"],
+      "typical_flow": "ticket_creation -> categorize -> assign -> resolve -> follow_up -> close",
+      "compliance_requirements": ["sla_compliance", "customer_satisfaction"]
+    }
+  }
+}
