@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflow Blueprint Generator | AI-Powered Enterprise Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="brand-icon">🧰</span>
+                <span class="brand-text">Workflow<span class="brand-accent">AI</span></span>
+            </div>
+            <div class="nav-menu">
+                <a href="#workflows" class="nav-link">Workflows</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#tech" class="nav-link">Technology</a>
+                <button class="btn-primary" onclick="location.reload()">
+                    <span>🔄</span> Refresh
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Transform Ideas into
+                    <span class="gradient-text">Intelligent Workflows</span>
+                </h1>
+                <p class="hero-description">
+                    Generate enterprise-grade BPMN workflows from natural language descriptions.
+                    Built with cutting-edge AI and deployed via MCP Protocol.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="workflow-count">4</div>
+                        <div class="stat-label">Workflows Generated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-steps">0</div>
+                        <div class="stat-label">Total Steps</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Validated</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visuals">
+                <div class="isometric-scene">
+                    <div class="conveyor-belt"></div>
+
+                    <div class="box box-1"><span>🧰</span></div>
+                    <div class="box box-2"><span>📋</span></div>
+                    <div class="box box-3"><span>⚙️</span></div>
+
+                    <div class="shop-structure">
+                        <div class="roof"></div>
+                        <div class="sign">WorkflowAI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generate Workflow Section -->
+    <section class="generate-section" id="generate">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🤖 Generate Custom Workflow</h2>
+                <p class="section-subtitle">Describe your workflow in natural language and let Gemini AI create it</p>
+            </div>
+            
+            <div class="generate-card">
+                <div class="prompt-container">
+                    <label for="workflow-prompt" class="prompt-label">
+                        <span class="label-icon">✍️</span>
+                        <span>Describe Your Workflow</span>
+                    </label>
+                    <textarea 
+                        id="workflow-prompt" 
+                        class="prompt-input" 
+                        placeholder="Example: Create a customer onboarding workflow where new customers submit their information, it gets verified by compliance team, account gets created automatically, welcome email is sent, and training is scheduled..."
+                        rows="5"
+                    ></textarea>
+                    
+                    <div class="prompt-options">
+                        <div class="option-group">
+                            <label for="workflow-domain">Domain</label>
+                            <select id="workflow-domain" class="domain-select">
+                                <option value="hr">Human Resources</option>
+                                <option value="finance">Finance</option>
+                                <option value="customer_service">Customer Service</option>
+                                <option value="it">IT / Engineering</option>
+                                <option value="operations">Operations</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn-generate" onclick="app.generateWorkflow()">
+                            <span class="btn-icon">⚡</span>
+                            <span>Generate Workflow</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="generation-result" class="generation-result" style="display: none;">
+                    <!-- Results will appear here -->
+                </div>
+            </div>
+            
+            <div class="example-prompts">
+                <h4>💡 Example Prompts:</h4>
+                <div class="example-grid">
+                    <button class="example-chip" onclick="app.useExample(this.textContent)">
+                        Invoice approval with manager and finance review
+                    </button>
+                    <button class="example-chip" onclick="app.useExample(this.textContent)">
+                        Bug reporting workflow with triage and assignment
+                    </button>
+                    <button class="example-chip" onclick="app.useExample(this.textContent)">
+                        Leave request with automatic approval based on duration
+                    </button>
+                    <button class="example-chip" onclick="app.useExample(this.textContent)">
+                        Content publishing workflow with review and SEO check
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-subtitle">Everything you need for enterprise workflow management</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI-Powered Generation</h3>
+                    <p>Gemini AI transforms natural language into structured BPMN workflows</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Automatic Validation</h3>
+                    <p>Built-in cycle detection and structural integrity verification</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📤</div>
+                    <h3>Multi-Format Export</h3>
+                    <p>Export to JSON, YAML, and BPMN 2.0 XML formats</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>MCP Protocol</h3>
+                    <p>Model Context Protocol for seamless integration</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🐳</div>
+                    <h3>Containerized</h3>
+                    <p>Docker-ready for instant deployment anywhere</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Processing</h3>
+                    <p>Generate workflows in seconds, not hours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="tech-section" id="tech">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Built With Modern Technology</h2>
+                <p class="section-subtitle">Production-ready tech stack</p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-badge">
+                    <span class="tech-icon">🐍</span>
+                    <span>Python 3.11</span>
+                </div>
+                <div class="tech-badge">
+                    <span class="tech-icon">🤖</span>
+                    <span>Gemini AI</span>
+                </div>
+                <div class="tech-badge">
+                    <span class="tech-icon">🔌</span>
+                    <span>MCP Protocol</span>
+                </div>
+                <div class="tech-badge">
+                    <span class="tech-icon">🐳</span>
+                    <span>Docker</span>
+                </div>
+                <div class="tech-badge">
+                    <span class="tech-icon">📄</span>
+                    <span>JSON/YAML</span>
+                </div>
+                <div class="tech-badge">
+                    <span class="tech-icon">🔄</span>
+                    <span>BPMN 2.0</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-backdrop" onclick="app.closeModal()"></div>
+        <div class="modal-container">
+            <button class="modal-close" onclick="app.closeModal()">
+                <span>×</span>
+            </button>
+            <div id="modal-content" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading workflows...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
