@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  workflow-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: workflow-generator
+    ports:
+      - "5000:5000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+    volumes:
+      # Mount data directory for persistent workflow storage
+      - ./data:/app/data
+      # Mount client for development (optional - remove in production)
+      - ./client:/app/client
+      # Mount server for development (optional - remove in production)
+      - ./server:/app/server
+    restart: unless-stopped
+    networks:
+      - workflow-net
+
+networks:
+  workflow-net:
+    driver: bridge
