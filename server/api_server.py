@@ -1,7 +1,7 @@
 """
 REST API Server for Workflow Generator
 ======================================
-Provides HTTP endpoints for the premium.html frontend
+Provides HTTP endpoints for the index.html frontend
 Bridges between web UI and MCP server backend
 """
 
@@ -230,11 +230,22 @@ def export_workflow():
 # Serve static files from workflows directory
 @app.route('/')
 def index():
-    return send_from_directory(WORKFLOWS_DIR, 'premium.html')
+    """Serve the main index.html file"""
+    try:
+        return send_from_directory(WORKFLOWS_DIR, 'index.html')
+    except Exception as e:
+        print(f"Error serving index.html: {e}", file=sys.stderr)
+        print(f"WORKFLOWS_DIR: {WORKFLOWS_DIR.absolute()}", file=sys.stderr)
+        return f"Error: {e}<br>Looking in: {WORKFLOWS_DIR.absolute()}", 500
 
 @app.route('/<path:path>')
 def serve_static(path):
-    return send_from_directory(WORKFLOWS_DIR, path)
+    """Serve static files from client directory"""
+    try:
+        return send_from_directory(WORKFLOWS_DIR, path)
+    except Exception as e:
+        print(f"Error serving {path}: {e}", file=sys.stderr)
+        return f"File not found: {path}", 404
 
 
 def run_mcp_loop():

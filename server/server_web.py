@@ -25,7 +25,7 @@ if __name__ == "__main__":
         print("=" * 70)
         print(f"\n✅ Server running at: http://localhost:{PORT}")
         print(f"📂 Serving files from: {DIRECTORY.absolute()}")
-        print(f"\n🚀 Open in browser: http://localhost:{PORT}/premium.html")
+        print(f"\n🚀 Open in browser: http://localhost:{PORT}/index.html")
         print("\n⏹️  Press Ctrl+C to stop")
         print("=" * 70)
         

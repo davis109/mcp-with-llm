@@ -19,6 +19,7 @@ app = Flask(__name__)
 CORS(app)
 
 WORKFLOWS_DIR = Path(__file__).parent / "data" / "workflows"
+CLIENT_DIR = Path(__file__).parent / "client"
 
 mcp_session = None
 exit_stack = None
@@ -206,11 +207,18 @@ def export_workflow():
 
 @app.route('/')
 def index():
-    return send_from_directory(WORKFLOWS_DIR, 'premium.html')
+    return send_from_directory(CLIENT_DIR, 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
-    return send_from_directory(WORKFLOWS_DIR, path)
+    # Check if requesting workflow JSON files
+    if path.endswith('.json') and not path.startswith('client/'):
+        try:
+            return send_from_directory(CLIENT_DIR, path)
+        except:
+            pass
+    # Otherwise serve from client directory
+    return send_from_directory(CLIENT_DIR, path)
 
 
 def run_mcp_loop():
@@ -250,7 +258,8 @@ def main():
         sys.exit(1)
     
     print(f"\n✅ API server starting on http://localhost:5000")
-    print(f"📂 Serving frontend from: {WORKFLOWS_DIR.absolute()}")
+    print(f"📂 Serving frontend from: {CLIENT_DIR.absolute()}")
+    print(f"📂 Workflows stored in: {WORKFLOWS_DIR.absolute()}")
     print(f"\n🌐 Open in browser: http://localhost:5000")
     print("\n⏹️  Press Ctrl+C to stop")
     print("=" * 70)
