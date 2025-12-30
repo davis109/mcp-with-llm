@@ -31,6 +31,7 @@ CORS(app)  # Enable CORS for all routes
 
 # Path configuration
 WORKFLOWS_DIR = Path(__file__).parent.parent / "client"
+print(f"📂 Static files directory: {WORKFLOWS_DIR.absolute()}", file=sys.stderr)
 
 # Global MCP session
 mcp_session = None
@@ -228,24 +229,34 @@ def export_workflow():
 
 
 # Serve static files from workflows directory
+@app.route('/<path:filename>')
+def serve_static(filename):
+    """Serve static files from client directory"""
+    print(f"📁 File requested: {filename}", file=sys.stderr)
+    try:
+        return send_from_directory(WORKFLOWS_DIR, filename)
+    except Exception as e:
+        print(f"❌ Error serving {filename}: {e}", file=sys.stderr)
+        return f"File not found: {filename}", 404
+
 @app.route('/')
 def index():
     """Serve the main index.html file"""
+    print(f"📄 Root / accessed, serving index.html", file=sys.stderr)
     try:
+        filepath = WORKFLOWS_DIR / 'index.html'
+        print(f"   Full path: {filepath.absolute()}", file=sys.stderr)
+        print(f"   File exists: {filepath.exists()}", file=sys.stderr)
+        if not filepath.exists():
+            import os
+            print(f"   Directory contents: {os.listdir(WORKFLOWS_DIR)}", file=sys.stderr)
+            return f"index.html not found in {WORKFLOWS_DIR.absolute()}", 404
         return send_from_directory(WORKFLOWS_DIR, 'index.html')
     except Exception as e:
-        print(f"Error serving index.html: {e}", file=sys.stderr)
-        print(f"WORKFLOWS_DIR: {WORKFLOWS_DIR.absolute()}", file=sys.stderr)
-        return f"Error: {e}<br>Looking in: {WORKFLOWS_DIR.absolute()}", 500
-
-@app.route('/<path:path>')
-def serve_static(path):
-    """Serve static files from client directory"""
-    try:
-        return send_from_directory(WORKFLOWS_DIR, path)
-    except Exception as e:
-        print(f"Error serving {path}: {e}", file=sys.stderr)
-        return f"File not found: {path}", 404
+        print(f"❌ Error serving root: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()
+        return f"Error: {e}", 500
 
 
 def run_mcp_loop():
