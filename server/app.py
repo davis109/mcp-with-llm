@@ -793,7 +793,7 @@ def export_workflow():
 # Serve static files
 @app.route('/')
 def index():
-    return send_from_directory(WORKFLOWS_DIR, '/index.html')
+    return send_from_directory(WORKFLOWS_DIR, 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
